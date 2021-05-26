@@ -52,6 +52,7 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.x).
 4. Browse to http://localhost:3000/ to open Grafana and log in using:
    - Username: admin
    - Password: admin
+   
    It will ask for a password change, use the same passwords again.
      
 5. Inside Grafana, you will see two dashboards if everything worked correctly:
