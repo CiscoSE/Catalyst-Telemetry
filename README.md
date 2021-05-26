@@ -36,7 +36,7 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.x).
 2. Go to the directory where the `docker-compose.yml` file is located, pull and
  build all images of the container:
    ```
-    cd cd DNA-Center-Telemetry/
+    cd DNA-Center-Telemetry/
     docker-compose build
    ```
 
@@ -62,7 +62,7 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.x).
    
 7. Open the file `credentials.yaml` and change the following line:
    ```
-   influxdb_token: 'ADD YOUR TOKEN HERE'
+   influxdb_token: 'ADD_YOUR_TOKEN_HERE'
    ```
    Paste the token you just copied there.
 
@@ -75,14 +75,17 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.x).
    Sources_, once opened click on _Add data source_. Search for InfluxDB 
    and select it.
    
-10. Leave all as per default values except:
+10. Leave all as per default values except:````
    - Query Language: Flux
-   - URL:  
+   - URL: http://influxdb-datasource:8086/
+      :warning: if you use localhost it won't work since docker is using an 
+     isolated network for all the containers.
+   - Auth: deselect Basic auth.
    - InfluxDB Details:
      - Organization: devnet
      - Token: paste the token you obtained in step #5.
      - Default Bucket: telemetry
-   Click on _Save & Test_.
+   Click on _Save & Test_ and you'll get message saying _3 buckets found_.
 
 
 
