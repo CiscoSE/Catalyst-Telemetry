@@ -16,29 +16,30 @@ or implied.
 """
 
 
+import os
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
-import yaml, time
+import time
+from dotenv import load_dotenv
 from setup import influxdb_setup
 import dnacentersdk
 
-# get configuration data
-config = yaml.safe_load(open("credentials.yaml"))
-influxdb_host = config['influxdb_host']
-influxdb_port = config['influxdb_port']
-influxdb_bucket = config['influxdb_bucket']
-influxdb_token = config['influxdb_token']
-influxdb_org = config['influxdb_org']
-collector_interval = int(config['collector_interval'])
-transceiver_update_interval = int(config['transceiver_update_interval'])
-dnacenter_sandbox_url = config['dnacenter_sandbox_url']
-dnacenter_sandbox_user = config['dnacenter_sandbox_user']
-dnacenter_sandbox_password = config['dnacenter_sandbox_password']
-dnacenter_live_url = config['dnacenter_live_url']
-dnacenter_live_user = config['dnacenter_live_user']
-dnacenter_live_password = config['dnacenter_live_password']
+# Get configuration data.
+load_dotenv()
+influxdb_host = os.getenv('INFLUX_HOST')
+influxdb_port = os.getenv('INFLUX_PORT')
+influxdb_bucket = os.getenv('INFLUX_BUCKET')
+influxdb_token = os.getenv('INFLUX_TOKEN')
+influxdb_org = os.getenv('INFLUX_ORG')
+collector_interval = int(os.getenv('COLLECTOR_INTERVAL'))
+dnacenter_sandbox_url = os.getenv('DNACENTER_SANDBOX_URL')
+dnacenter_sandbox_user = os.getenv('DNACENTER_SANDBOX_USER')
+dnacenter_sandbox_password = os.getenv('DNACENTER_SANDBOX_PASSWORD')
+dnacenter_live_url = os.getenv('DNACENTER_LIVE_URL')
+dnacenter_live_user = os.getenv('DNACENTER_LIVE_USER')
+dnacenter_live_password = os.getenv('DNACENTER_LIVE_PASSWORD')
 
-# Setup influxdb
+# Setup InfluxDB.
 influxdb_setup()
 client = InfluxDBClient(
     url="http://" + influxdb_host + ":" + str(influxdb_port),

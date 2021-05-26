@@ -15,21 +15,22 @@ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied.
 """
 
+import os
 from influxdb_client import InfluxDBClient
-import yaml, time, requests
-import dnacentersdk
+import time
+from dotenv import load_dotenv
 
-# get configuration data
-config = yaml.safe_load(open("credentials.yaml"))
-influxdb_host = config['influxdb_host']
-influxdb_port = config['influxdb_port']
-influxdb_bucket = config['influxdb_bucket']
-influxdb_token = config['influxdb_token']
-influxdb_org = config['influxdb_org']
-grafana_user = config['grafana_user']
-grafana_password = config['grafana_password']
-grafana_host = config['grafana_host']
-grafana_port = config['grafana_port']
+# Get configuration data.
+load_dotenv()
+influxdb_host = os.getenv('INFLUX_HOST')
+influxdb_port = os.getenv('INFLUX_PORT')
+influxdb_bucket = os.getenv('INFLUX_BUCKET')
+influxdb_token = os.getenv('INFLUX_TOKEN')
+influxdb_org = os.getenv('INFLUX_ORG')
+grafana_user = os.getenv('GRAFANA_USER')
+grafana_password = os.getenv('GRAFANA_PASSWORD')
+grafana_host = os.getenv('GRAFANA_HOST')
+grafana_port = os.getenv('GRAFANA_PORT')
 
 
 # connect to influxdb and create database

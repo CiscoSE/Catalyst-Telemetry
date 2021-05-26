@@ -16,39 +16,49 @@ services:
     networks:
       - webnet
   grafana:
-    container_name: grafana-ui
+    container_name: ${GRAFANA_HOST}
     restart: always
     image: grafana/grafana
     deploy:
       restart_policy:
         condition: on-failure
     ports:
-      - 3000:3000
+      - ${GRAFANA_PORT}:${GRAFANA_PORT}
     user: "0"
     environment:
       - TZ=Europe/Amsterdam
+    env_file:
+      - .env
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/var/lib/grafana/dashboards
     networks:
       - webnet
   influxdb:
-    container_name: influxdb-datasource
+    container_name: ${INFLUX_HOST}
     restart: always
     image: influxdb
     deploy:
       restart_policy:
         condition: on-failure
     ports:
-      - 8086:8086
+      - ${INFLUX_PORT}:${INFLUX_PORT}
     volumes:
       - ./influxdb/:/root/.influxdbv2
     environment:
       - TZ=Europe/Amsterdam
-      - INFLUX_ORG=${INFLUX_DB}
-      - INFLUXDB_ADMIN_USER=${INFLUX_USERNAME}
-      - INFLUXDB_ADMIN_PASSWORD=${INFLUX_PASSWORD}
-      - INFLUX_TOKEN=${INFLUX_TOKEN}
+    networks:
+      - webnet
+    # Use the influx cli to set up an influxdb instance.
+  influxdb_cli:
+    links:
+      - influxdb
+    image: influxdb
+    entrypoint: influx setup --bucket ${INFLUX_BUCKET} -t ${INFLUX_TOKEN} -o ${INFLUX_ORG} --username=${INFLUX_USERNAME} --password=${INFLUX_PASSWORD} --host=http://influxdb-datasource:8086 -f
+    # Wait for the influxd service in the influxdb container has fully bootstrapped before trying to setup an influxdb instance with the influxdb_cli service.
+    restart: on-failure:10
+    depends_on:
+      - influxdb
     networks:
       - webnet
 networks:

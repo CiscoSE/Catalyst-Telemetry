@@ -1,0 +1,19 @@
+apiVersion: 1
+
+datasources:
+  - name: 'InfluxDB'
+    access: 'proxy'
+    editable: true
+    is_default: true
+    org_id: 1
+    type: 'influxdb'
+    basicAuth: false
+    url: http://${INFLUX_HOST}:${INFLUX_PORT}
+    secureJsonData:
+      token: ${INFLUX_TOKEN}
+    jsonData:
+      defaultBucket: ${INFLUX_BUCKET}
+      httpMode: POST
+      organization: ${INFLUX_ORG}
+      version: Flux
+    version: 1
