@@ -42,7 +42,7 @@ services:
     ports:
       - 8086:8086
     volumes:
-      - ~/OneDrive\ -\ Cisco/01_Projects/DNA\ Center\ Telemetry/influxdb/:/root/.influxdbv2
+      - ./influxdb/:/root/.influxdbv2
     environment:
       - TZ=Europe/Amsterdam
     networks:
