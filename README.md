@@ -40,95 +40,26 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.x).
     docker-compose build
    ```
 
-4. Grafana and InfluxDB need to be configured once, start InfluxDB and Grafana 
+3. Grafana and InfluxDB will be automatically configured. Start all the 
    containers in the background (-d): 
    ```
-    docker-compose up -d grafana influxdb
+    docker-compose up -d
    ```
-5. Browse to http://localhost:8086 to open InfluxDB, click on _Get Started_, 
-   use the 
-   following values:
-   - Username: demo
-   - Password: demo1234!
-   - Initial Organization Name: devnet
-   - Initial Bucket Name: telemetry
    
-   Click on continue, afterwards click on _Configure Later_. Go to  _Data_ 
-   on the left-side menu, navigate to the _Tokens_ section, click on 
-   _demo's Token_, copy the token.
+   Note: there is a container named _influxdb_cli_ that just needs to run 
+   once, this container will do all the setup work for you.
    
-6. Go the project folder and navigate inside `app_code`, rename the file 
-   `credentials_sample.yaml` to `credentials.yaml`
-   
-7. Open the file `credentials.yaml` and change the following line:
-   ```
-   influxdb_token: 'ADD_YOUR_TOKEN_HERE'
-   ```
-   Paste the token you just copied there.
-
-8. Browse to http://localhost:3000/ to open Grafana and log in using:
+4. Browse to http://localhost:3000/ to open Grafana and log in using:
    - Username: admin
    - Password: admin
    It will ask for a password change, use the same passwords again.
      
-9. Inside Grafana navigate using the left-side menu to _Settings > Data 
-   Sources_, once opened click on _Add data source_. Search for InfluxDB 
-   and select it.
-   
-10. Leave all as per default values except:````
-   - Query Language: Flux
-   - URL: http://influxdb-datasource:8086/
-      :warning: if you use localhost it won't work since docker is using an 
-     isolated network for all the containers.
-   - Auth: deselect Basic auth.
-   - InfluxDB Details:
-     - Organization: devnet
-     - Token: paste the token you obtained in step #5.
-     - Default Bucket: telemetry
-   Click on _Save & Test_ and you'll get message saying _3 buckets found_.
-
-
-
-
-
-
-2. Configure the environment variables with the API key. Locate the file in
-   the root of the project called: `docker_sample.env`.
-   Rename this file to `docker.env` and add your API key in the line
-   `MERAKI_DASHBOARD_API_KEY`. The file should look like this:
-  
-   ```
-    CELERY_BROKER_URL=redis://redis:6379
-    CELERY_RESULT_BACKEND=redis://redis:6379
-    MERAKI_DASHBOARD_API_KEY=YOUR_API_KEY_HERE
-   ```
-
-3. Go to the directory where the `docker-compose.yml` file is located, pull and
- build all images of the container:
-   ```
-    cd meraki-switches-configurator/
-    docker-compose build
-   ```
-
-4. Start all the containers in the background
-   ```
-    docker-compose up -d
-   ```
-
-5. To check on the state of the containers, run:
-   ```
-    docker-compose ps
-   ```
-
-6. Observe the API and celery worker logs:
-   ```
-    docker-compose logs -f app worker
-   ```
-
-7. Open the url <localhost:8080>, if you followed all the steps correctly
-   the website will be shown.
-
-
+5. Inside Grafana, you will see two dashboards if everything worked correctly:
+   - General Health Status 
+   - Hardware Health
+    
+    You should be able to access them and see the information from DNA Center.
+       
 ### Cleanup
 
 You can bring down all containers in this sample app with:

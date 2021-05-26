@@ -123,6 +123,7 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
+          "displayName": "  ${__field.labels.score_category}",
           "color": {},
           "custom": {},
           "thresholds": {
@@ -533,7 +534,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "displayName": " ${__field.labels.type}"
+          "displayName": "${__field.labels.type}"
         },
         "overrides": []
       },
