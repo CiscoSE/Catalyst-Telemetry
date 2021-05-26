@@ -45,6 +45,10 @@ services:
       - ./influxdb/:/root/.influxdbv2
     environment:
       - TZ=Europe/Amsterdam
+      - INFLUX_ORG=${INFLUXDB_DB}
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+      - INFLUX_TOKEN=${INFLUX_TOKEN}
     networks:
       - webnet
 networks:
