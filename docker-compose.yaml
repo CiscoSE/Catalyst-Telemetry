@@ -13,6 +13,8 @@ services:
       - ./app-code:/usr/src/app
     environment:
       - TZ=Europe/Amsterdam
+    env_file:
+      - .env
     networks:
       - webnet
   grafana:

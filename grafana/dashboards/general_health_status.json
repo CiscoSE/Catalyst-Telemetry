@@ -3,7 +3,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": "InfluxDB",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -19,7 +19,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": null,
+      "datasource": "InfluxDB",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -119,7 +119,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "InfluxDB",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -253,7 +253,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "InfluxDB",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -395,7 +395,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "InfluxDB",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -528,7 +528,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "InfluxDB",
       "decimals": null,
       "fieldConfig": {
         "defaults": {
