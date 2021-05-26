@@ -16,4 +16,3 @@ datasources:
       httpMode: POST
       organization: ${INFLUX_ORG}
       version: Flux
-    version: 1
