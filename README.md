@@ -9,7 +9,8 @@ The use case behind this project is to show how easy is to integrate the
 telemetry/assurance information from DNA Center inside a customized dashboard
 that a customer has.
 
-In this file you can find the basic instructions to run the code.
+In this file you can find the basic instructions to run the code in 
+[Instructions](#Instructions).
 
 ## Architecture
 
