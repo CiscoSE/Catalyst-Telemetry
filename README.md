@@ -43,7 +43,7 @@ Hardware Health Dashboard
 
 ### Versions
 
-This code was developed with Python 3.9 using the DNA Center SDK 
+This code was developed and tested with Python 3.9, using the DNA Center SDK 
 Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.0).
 
 ### Steps
