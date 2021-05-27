@@ -51,8 +51,8 @@ services:
       - TZ=Europe/Amsterdam
     networks:
       - webnet
-    # Use the influx cli to set up an influxdb instance.
   influxdb_cli:
+    # Use the influx cli to set up an influxdb instance.
     container_name: influxdb_cli
     links:
       - influxdb

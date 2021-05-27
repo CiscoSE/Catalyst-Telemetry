@@ -1,7 +1,7 @@
 ## Welcome to DNA Center Telemetry Dashboard
 
-This small code allows you to quickly create a Grafana Dashboard that is 
-fed from 2 DNA Centers that Cisco has:
+This small piece of code allows you to quickly create a Grafana Dashboard 
+that is fed from 2 DNA Centers that Cisco has:
 - Sandbox: https://sandboxdnac.cisco.com
 - Live: https://live.cisco.com
 
@@ -12,7 +12,26 @@ that a customer has.
 In this file you can find the basic instructions to run the code.
 
 ## Architecture
-TODO: finish
+
+The following image illustrates the architecture:
+
+![Architecture](/images/architecture.png)
+
+It uses:
+- Collector: Python-based script
+- InfluxDB 2.0: time series database
+- Grafana: dashboard
+
+## Screenshots
+
+Containers in steady state:
+![Containers in steady state](/images/containers_steady.png)
+
+General Health Status Dashboard:
+![General Health Status Dashboard](/images/general_health_status.png)
+
+Hardware Health Dashboard
+![Hardware Health Dashboard](/images/hardware_health.png)
 
 ## Instructions
 
@@ -24,7 +43,7 @@ TODO: finish
 ### Versions
 
 This code was developed with Python 3.9 using the DNA Center SDK 
-Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.x).
+Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.0).
 
 ### Steps
 
@@ -48,14 +67,17 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.x).
    
    Note: there is a container named _influxdb_cli_ that just needs to run 
    once, this container will do all the setup work for you.
+
    
 4. Browse to http://localhost:3000/ to open Grafana and log in using:
-   - Username: admin
-   - Password: admin
+   - **Username**: admin
+   - **Password**: admin
    
    It will ask for a password change, use the same passwords again.
-     
-5. Inside Grafana, you will see two dashboards if everything worked correctly:
+   
+
+5. Inside Grafana, click on the _Search_ button on the left-side menu, you 
+   will see two dashboards if everything worked correctly:
    - General Health Status 
    - Hardware Health
     
