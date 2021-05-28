@@ -7,9 +7,9 @@ that is fed from 2 DNA Centers that Cisco has:
 
 The use case behind this project is to show how easy is to integrate the 
 telemetry/assurance information from DNA Center inside a customized dashboard
-that a customer has.
+that a customer might have.
 
-In this file you can find the basic instructions to run the code in 
+You can find the basic instructions to run the code in the section 
 [Instructions](#Instructions).
 
 ## Architecture
@@ -60,14 +60,15 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.0).
     docker-compose build
    ```
 
-3. Grafana and InfluxDB will be automatically configured. Start all the 
-   containers in the background (-d): 
+3. Start all the containers in the background (-d). Grafana and InfluxDB will 
+   be automatically configured. 
    ```
     docker-compose up -d
    ```
    
    Note: there is a container named _influxdb_cli_ that just needs to run 
-   once, this container will do all the setup work for you.
+   once, this container will do all the setup work for you and afterwards 
+   it will stop.
 
    
 4. Browse to http://localhost:3000/ to open Grafana and log in using:
