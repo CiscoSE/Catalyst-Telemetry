@@ -15,20 +15,24 @@ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied.
 """
 
-
 import os
+import time
+
+import dnacentersdk
+from dotenv import load_dotenv
 from influxdb_client import InfluxDBClient
 from influxdb_client.client.write_api import SYNCHRONOUS
-import time
-from dotenv import load_dotenv
+from influxdb_client.client.write_api import WritePrecision
+
+from sdwan_helper import RestApiLib
 from setup import influxdb_setup
-import dnacentersdk
 
 # Get configuration data.
 load_dotenv()
 influxdb_host = os.getenv('INFLUX_HOST')
 influxdb_port = os.getenv('INFLUX_PORT')
-influxdb_bucket = os.getenv('INFLUX_BUCKET')
+influxdb_dnabucket = os.getenv('INFLUX_DNACBUCKET')
+influxdb_sdwanbucket = os.getenv('INFLUX_SDWANBUCKET')
 influxdb_token = os.getenv('INFLUX_TOKEN')
 influxdb_org = os.getenv('INFLUX_ORG')
 collector_interval = int(os.getenv('COLLECTOR_INTERVAL'))
@@ -38,6 +42,10 @@ dnacenter_sandbox_password = os.getenv('DNACENTER_SANDBOX_PASSWORD')
 dnacenter_live_url = os.getenv('DNACENTER_LIVE_URL')
 dnacenter_live_user = os.getenv('DNACENTER_LIVE_USER')
 dnacenter_live_password = os.getenv('DNACENTER_LIVE_PASSWORD')
+sdwan_sandbox_host = os.getenv('SDWAN_SANDBOX_HOST')
+sdwan_sandbox_port = os.getenv('SDWAN_SANDBOX_PORT')
+sdwan_sandbox_user = os.getenv('SDWAN_SANDBOX_USER')
+sdwan_sandbox_password = os.getenv('SDWAN_SANDBOX_PASSWORD')
 
 # Setup InfluxDB.
 influxdb_setup()
@@ -45,73 +53,152 @@ client = InfluxDBClient(
     url="http://" + influxdb_host + ":" + str(influxdb_port),
     token=influxdb_token)
 
-# Setup DNA Center Sandbox
+# Setup DNA Center Sandbox.
 dnacenter_sandbox = dnacentersdk.DNACenterAPI(
     base_url=dnacenter_sandbox_url,
     username=dnacenter_sandbox_user,
     password=dnacenter_sandbox_password)
 
-# Setup DNA Center Sandbox
+# Setup DNA Center Sandbox.
 dnacenter_live = dnacentersdk.DNACenterAPI(
     base_url=dnacenter_live_url,
     username=dnacenter_live_user,
     password=dnacenter_live_password,
     verify=False)
 
+# Setup SD-WAN Sandbox.
+sdwan_session = RestApiLib(sdwan_sandbox_host,
+                           sdwan_sandbox_port,
+                           sdwan_sandbox_user,
+                           sdwan_sandbox_password)
+
 while True:
+    # InfluxDB write API.
     write_api = client.write_api(write_options=SYNCHRONOUS)
 
-    # Client health
-    print('\nPrinting client health...')
+    """ DNA Center section """
+    # Client health.
     response = dnacenter_live.clients.get_overall_client_health().response
     for score in response[0]['scoreDetail']:
         score_category = score['scoreCategory']['value']
         score_client_count = score['clientCount']
         score_value = score['scoreValue']
-        print('Type: {0}, Count: {1}, Score: {2}'.format(
-            score_category,
-            score_client_count,
-            score_value))
 
         # Save to influxdb
         data = "client_health_general,score_category=" + score_category + \
                " score_value=" + str(score_value)
-        write_api.write(influxdb_bucket, influxdb_org, data)
+        write_api.write(influxdb_dnabucket, influxdb_org, data)
         data = "client_health_general,score_category=" + score_category + \
                " client_count=" + str(score_client_count)
-        write_api.write(influxdb_bucket, influxdb_org, data)
+        write_api.write(influxdb_dnabucket, influxdb_org, data)
         try:
             for category in score['scoreList']:
                 category_type = category['scoreCategory']['value']
                 client_count = category['clientCount']
-                print('\tType: {0}, Count: {1}'.format(
-                    category_type,
-                    client_count))
 
                 data = "client_health_detailed,score_category=" + \
                        score_category + ",type=" + category_type + \
                        " client_count=" + str(client_count)
-                write_api.write(influxdb_bucket, influxdb_org, data)
+                write_api.write(influxdb_dnabucket, influxdb_org, data)
         except:
             pass
 
     devices = dnacenter_sandbox.devices. \
         get_device_list(family="Switches and Hubs").response
     for device in devices:
-        device_details = \
-            dnacenter_sandbox.devices. \
-                get_device_detail(identifier="uuid",
-                                  search_by=device.id).response
+        device_details = dnacenter_sandbox. \
+            devices.get_device_detail(identifier="uuid",
+                                      search_by=device.id).response
         cpu = device_details.cpu
         overall_health = device_details.overallHealth
         device_name = device.nwDeviceName
 
         data = "cpu,host=" + device.id + ",device_name=" + device.hostname + \
                " cpu_used=" + str(cpu)
-        write_api.write(influxdb_bucket, influxdb_org, data)
+        write_api.write(influxdb_dnabucket, influxdb_org, data)
         data = "overall_health,host=" + device.id + ",device_name=" + \
                device.hostname + " overall_health=" + str(overall_health)
-        write_api.write(influxdb_bucket, influxdb_org, data)
+        write_api.write(influxdb_dnabucket, influxdb_org, data)
 
-    # pause the script for x seconds, represents the polling interval
+    """ SD-WAN Section """
+    # Get the control connections statistics.
+    control_connections_summary = sdwan_session. \
+        get_request("network/connectionssummary")
+
+    items = control_connections_summary.json()['data']
+    # For each type (vSmart, WAN Edge and vBond) get the data and save it.
+    for item in items:
+        name = item["name"].replace(" ", "\ ")
+        down_devices = 0
+        for status in item["statusList"]:
+            down_devices += status["count"]
+
+            data = "connections_summary,name=" + name + \
+                   ",status=" + status["status"] + " count=" + \
+                   str(down_devices)
+            write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+        data = "connections_summary,name=" + name + ",status=" \
+               + "up" + " count=" + str(item["count"] - down_devices)
+        write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+    # Get Device Control status.
+    device_control_summary = sdwan_session. \
+        get_request("device/control/count").json()['data'][0]
+    for status in device_control_summary["statusList"]:
+        name = status["name"].replace(" ", "\ ")
+        data = "device_control_summary,name=" + name + \
+               ",status=" + status["status"] + " count=" + \
+               str(status["count"])
+        write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+    # Get Site Health data.
+    site_health_summary = sdwan_session. \
+        get_request("device/bfd/sites/summary").json()['data'][0]
+    for status in site_health_summary["statusList"]:
+        name = status["name"].replace(" ", "\ ")
+        data = "site_health,name=" + name + \
+               ",status=" + status["status"] + " count=" + \
+               str(status["count"])
+        write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+    # Get Hardware Health data.
+    hardware_health_summary = sdwan_session. \
+        get_request("device/hardwarehealth/summary").json()['data'][0]
+
+    for item in hardware_health_summary["statusList"]:
+        data = "hardware_health,status=" + item["name"] + \
+               " count=" + str(item["count"])
+        write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+    # Get Transport Summary
+    query = '{"query":{"condition":"AND","rules":[{"value":["1"],' \
+            '"field":"entry_time","type":"date","operator":"last_n_hours"}]}}'
+    transport_summary = sdwan_session. \
+        get_request("statistics/approute/transport/summary/loss_percentage"
+                    "?limit=5&query=" + query).json()["data"]
+
+    for transport in transport_summary:
+        data = "transport_health,transport=" + transport["color"] + \
+               " loss_percentage=" + str(transport["loss_percentage"]) + " " \
+               + str(transport["entry_time"])
+        write_api.write(influxdb_sdwanbucket,
+                        influxdb_org,
+                        data,
+                        write_precision=WritePrecision.MS)
+
+    # Get Applications Summary.
+    query = '{"query":{"condition":"AND","rules":[{"value":["1"],' \
+            '"field":"entry_time","type":"date","operator":"last_n_hours"}]}}'
+    applications_summary = sdwan_session. \
+        get_request("statistics/dpi/applications/summary?"
+                    "limit=10&query=" + query).json()["data"]
+
+    for application in applications_summary:
+        data = "application_summary,application=" + \
+               application["application"] + " octets=" + \
+               str(application["octets"])
+        write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+    # Pause the script for x seconds, represents the polling interval.
     time.sleep(collector_interval)

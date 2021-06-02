@@ -16,15 +16,17 @@ or implied.
 """
 
 import os
-from influxdb_client import InfluxDBClient
-import time
+
+import influxdb_client.rest
 from dotenv import load_dotenv
+from influxdb_client import InfluxDBClient
 
 # Get configuration data.
 load_dotenv()
 influxdb_host = os.getenv('INFLUX_HOST')
 influxdb_port = os.getenv('INFLUX_PORT')
-influxdb_bucket = os.getenv('INFLUX_BUCKET')
+influxdb_dnabucket = os.getenv('INFLUX_DNACBUCKET')
+influxdb_sdwanbucket = os.getenv('INFLUX_SDWANBUCKET')
 influxdb_token = os.getenv('INFLUX_TOKEN')
 influxdb_org = os.getenv('INFLUX_ORG')
 grafana_user = os.getenv('GRAFANA_USER')
@@ -33,17 +35,29 @@ grafana_host = os.getenv('GRAFANA_HOST')
 grafana_port = os.getenv('GRAFANA_PORT')
 
 
-# connect to influxdb and create database
 def influxdb_setup():
-    time.sleep(5)
-
-    # connect to influxdb
+    # Connect to influxdb
     print("Connecting to influxdb... " + influxdb_host)
     client = InfluxDBClient(
         url="http://" + influxdb_host + ":" + str(influxdb_port),
         token=influxdb_token)
 
-    # Check if buckets already exists, if it works influxdb is working fine.
-    client.buckets_api().find_buckets().buckets
+    # Find the organization id.
+    orgs = client.organizations_api().find_organizations()
+    org_id = None
+    for org in orgs:
+        if org.name == influxdb_org:
+            org_id = org.id
+            break
 
+    # Create the second bucket if it doesn't exist already.
+    try:
+        client.buckets_api().create_bucket(bucket_name=influxdb_sdwanbucket,
+                                           org_id=org_id,
+                                           description="")
+    except influxdb_client.rest.ApiException as ex:
+        # The organization already exists.
+        if "bucket with name " + influxdb_sdwanbucket + "already exists" \
+                in ex.body:
+            pass
     return

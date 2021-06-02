@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 4,
   "links": [],
   "panels": [
     {
@@ -26,7 +26,6 @@
             "fixedColor": "yellow",
             "mode": "palette-classic"
           },
-          "custom": {},
           "displayName": "${__field.labels.score_category}",
           "mappings": [
             {
@@ -72,7 +71,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -91,7 +90,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"telemetry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"client_count\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"client_count\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -124,12 +123,6 @@
       "fieldConfig": {
         "defaults": {
           "displayName": "  ${__field.labels.score_category}",
-          "color": {},
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": []
-          },
           "unit": "short"
         },
         "overrides": []
@@ -160,7 +153,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -186,7 +179,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"telemetry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"client_count\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"client_count\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -226,7 +219,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:638",
           "format": "short",
           "label": "Client Count",
           "logBase": 1,
@@ -235,7 +227,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:639",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -257,7 +248,6 @@
       "datasource": "InfluxDB",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "displayName": "  ${__field.labels.score_category}"
         },
         "overrides": []
@@ -288,7 +278,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -314,7 +304,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"telemetry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"score_value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"score_value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -336,7 +326,6 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:261",
           "colorMode": "critical",
           "fill": true,
           "line": true,
@@ -364,7 +353,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:281",
           "format": "short",
           "label": "Score",
           "logBase": 1,
@@ -373,7 +361,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:282",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -390,8 +377,8 @@
     {
       "aliasColors": {
         "  FAIR": "orange",
-        "  GOOD": "dark-green",
-        "  POOR": "dark-red"
+        "  GOOD": "green",
+        "  POOR": "red"
       },
       "bars": true,
       "dashLength": 10,
@@ -400,7 +387,6 @@
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "displayName": "  ${__field.labels.type}"
         },
         "overrides": []
@@ -431,7 +417,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -457,7 +443,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"telemetry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRELESS\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"FAIR\" or r[\"type\"] == \"GOOD\" or r[\"type\"] == \"POOR\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRELESS\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"FAIR\" or r[\"type\"] == \"GOOD\" or r[\"type\"] == \"POOR\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -497,7 +483,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:419",
           "decimals": 0,
           "format": "short",
           "label": "Client Count",
@@ -507,7 +492,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:420",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -523,8 +507,8 @@
     },
     {
       "aliasColors": {
-        " GOOD": "dark-green",
-        " POOR": "dark-red"
+        "GOOD": "green",
+        "POOR": "red"
       },
       "bars": true,
       "dashLength": 10,
@@ -533,7 +517,6 @@
       "decimals": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "displayName": "${__field.labels.type}"
         },
         "overrides": []
@@ -564,7 +547,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -590,7 +573,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"telemetry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRED\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"GOOD\" or r[\"type\"] == \"POOR\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRED\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"GOOD\" or r[\"type\"] == \"POOR\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -630,7 +613,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:884",
           "format": "short",
           "label": "Client Count",
           "logBase": 1,
@@ -639,7 +621,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:885",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -666,7 +647,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "General Health Status",
+  "title": "DNAC - General Health Status",
   "uid": "3Qy8Gs3Gz",
   "version": 4
 }

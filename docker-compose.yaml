@@ -59,7 +59,7 @@ services:
     links:
       - influxdb
     image: influxdb
-    entrypoint: influx setup --bucket ${INFLUX_BUCKET} -t ${INFLUX_TOKEN} -o ${INFLUX_ORG} --username=${INFLUX_USERNAME} --password=${INFLUX_PASSWORD} --host=http://influxdb-datasource:8086 -f
+    entrypoint: influx setup --bucket ${INFLUX_DNACBUCKET} -t ${INFLUX_TOKEN} -o ${INFLUX_ORG} --username=${INFLUX_USERNAME} --password=${INFLUX_PASSWORD} --host=http://influxdb-datasource:8086 -f
     # Wait for the influxd service in the influxdb container has fully bootstrapped before trying to setup an influxdb instance with the influxdb_cli service.
     restart: on-failure:10
     depends_on:
