@@ -1231,13 +1231,17 @@
       "hiddenSeries": false,
       "id": 18,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
+        "sort": "current",
+        "sortDesc": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -1248,7 +1252,7 @@
       "percentage": false,
       "pluginVersion": "7.5.7",
       "pointradius": 2,
-      "points": false,
+      "points": true,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
@@ -1300,7 +1304,7 @@
       "title": "Top Applications",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1314,7 +1318,7 @@
       "yaxes": [
         {
           "format": "decbytes",
-          "label": null,
+          "label": "Usage",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -1349,5 +1353,5 @@
   "timezone": "",
   "title": "SD-WAN - General Health Status",
   "uid": "FxapXZ6Mk",
-  "version": 9
+  "version": 2
 }
