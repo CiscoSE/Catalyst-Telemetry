@@ -121,7 +121,7 @@ while True:
         write_api.write(influxdb_dnabucket, influxdb_org, data)
 
     """ SD-WAN Section """
-    # Get the control connections statistics.
+    # Get the control connections statistics (vBond, vSmart, vEdge).
     control_connections_summary = sdwan_session. \
         get_request("network/connectionssummary")
 
@@ -133,6 +133,23 @@ while True:
         for status in item["statusList"]:
             down_devices += status["count"]
 
+            data = "connections_summary,name=" + name + \
+                   ",status=" + status["status"] + " count=" + \
+                   str(down_devices)
+            write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+        data = "connections_summary,name=" + name + ",status=" \
+               + "up" + " count=" + str(item["count"] - down_devices)
+        write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+    # Get vManage statistics.
+    vmanage_summary = sdwan_session. \
+        get_request("clusterManagement/health/summary").json()['data']
+    for item in vmanage_summary:
+        name = item["name"].replace(" ", "\ ")
+        down_devices = 0
+        for status in item["statusList"]:
+            down_devices += status["count"]
             data = "connections_summary,name=" + name + \
                    ",status=" + status["status"] + " count=" + \
                    str(down_devices)
@@ -198,6 +215,19 @@ while True:
         data = "application_summary,application=" + \
                application["application"] + " octets=" + \
                str(application["octets"])
+        write_api.write(influxdb_sdwanbucket, influxdb_org, data)
+
+    # Get Transport Interface Distribution.
+    transport_distribution = sdwan_session. \
+        get_request("device/tlocutil").json()["data"]
+
+    for interface in transport_distribution:
+        percentageDistribution = interface["percentageDistribution"]. \
+            replace(" ", "\ ")
+        data = "transport_distribution,name=" + \
+               interface["name"] + ",percentage_distribution=" + \
+               percentageDistribution + " value=" + \
+               str(interface["value"])
         write_api.write(influxdb_sdwanbucket, influxdb_org, data)
 
     # Pause the script for x seconds, represents the polling interval.
