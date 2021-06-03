@@ -1682,12 +1682,12 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "SD-WAN - General Health Status",
   "uid": "FxapXZ6Mk",
-  "version": 5
+  "version": 1
 }
