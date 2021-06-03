@@ -1,13 +1,19 @@
-## Welcome to DNA Center Telemetry Dashboard
+## Welcome to DNA Telemetry Dashboard
 
-This small piece of code allows you to quickly create a Grafana Dashboard 
-that is fed from 2 DNA Centers that Cisco has:
+This small piece of code allows you to quickly create a few Grafana Dashboards 
+that are fed from different DNA elements such as DNA Center and vManage 
+(SD-WAN).
+
+The DNA Centers used are:
 - Sandbox: https://sandboxdnac.cisco.com
 - Live: https://live.cisco.com
 
+The vManage used is:
+- SD-WAN demo: https://sdwandemo.cisco.com
+
 The use case behind this project is to show how easy is to integrate the 
-telemetry/assurance information from DNA Center inside a customized dashboard
-that a customer might have.
+telemetry/assurance information from DNA elements inside a customized 
+dashboard that a customer might have.
 
 You can find the basic instructions to run the code in the section 
 [Instructions](#Instructions).
@@ -16,47 +22,53 @@ You can find the basic instructions to run the code in the section
 
 The following image illustrates the architecture:
 
-![Architecture](/images/architecture.png)
+![DNA Center Architecture](/images/DNA_DNAC_Telemetry.png)
+
+![SD-WAN Architecture](/images/DNA_SD-WAN_Telemetry.png)
 
 It uses:
-- Collector: Python-based script
-- InfluxDB 2.0: time series database
-- Grafana: dashboard
+- Collector: Python-based script.
+- InfluxDB 2.0: time series database.
+- Grafana: dashboard.
 
 ## Screenshots
 
 Containers in steady state:
 ![Containers in steady state](/images/containers_steady.png)
 
-General Health Status Dashboard:
-![General Health Status Dashboard](/images/general_health_status.png)
+DNA Center General Health Status Dashboard:
+![DNA Center General Health Status Dashboard](/images/dnac_general_health_status.png)
 
-Hardware Health Dashboard
-![Hardware Health Dashboard](/images/hardware_health.png)
+DNA Center Hardware Health Dashboard
+![DNA Center Hardware Health Dashboard](/images/dnac_hardware_health.png)
+
+SD-WAN General Health Status Dashboard:
+![SD-WAN General Health Status Dashboard](/images/sdwan_general_health_status.png)
+
 
 ## Instructions
 
 ### Requirements
 
-- Access to internet (to connect to the DNA Center instances).
+- Access to internet (to connect to the DNA Center & SD-WAN instances).
 - Docker installed (this app runs on Docker).
 
 ### Versions
 
-This code was developed and tested with Python 3.9, using the DNA Center SDK 
-Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.0).
+This code has been developed and tested with Python 3.9, using the DNA Center 
+SDK Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.0).
 
 ### Steps
 
 1. Clone the repository.
    ```
-   git clone https://wwwin-github.cisco.com/nfitelop/DNA-Center-Telemetry
+   git clone https://wwwin-github.cisco.com/nfitelop/DNA-Telemetry
    ```
 
 2. Go to the directory where the `docker-compose.yml` file is located, pull and
  build all images of the container:
    ```
-    cd DNA-Center-Telemetry/
+    cd DNA-Telemetry/
     docker-compose build
    ```
 
@@ -66,9 +78,13 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.0).
     docker-compose up -d
    ```
    
-   Note: there is a container named _influxdb_cli_ that just needs to run 
+   **Note:** there is a container named _influxdb_cli_ that just needs to run 
    once, this container will do all the setup work for you and afterwards 
    it will stop.
+   
+   **Note 2:** the containers _influxdb_cli_ and _collector_ need the database 
+   to be up and running, that takes some time, you might see both 
+   containers restarting a few times before they can do their job.
 
    
 4. Browse to http://localhost:3000/ to open Grafana and log in using:
@@ -80,10 +96,12 @@ Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.0).
 
 5. Inside Grafana, click on the _Search_ button on the left-side menu, you 
    will see two dashboards if everything worked correctly:
-   - General Health Status 
-   - Hardware Health
-    
-    You should be able to access them and see the information from DNA Center.
+   - DNAC - General Health Status 
+   - DNAC - Hardware Health
+   - SD-WAN - General Health Status
+   
+   You should be able to access them and see the information from the 
+   different sources.
        
 ### Cleanup
 
