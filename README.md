@@ -55,8 +55,8 @@ SD-WAN General Health Status Dashboard:
 
 ### Versions
 
-This code has been developed and tested with Python 3.9, using the DNA Center 
-SDK Dashboard v2.2.2 and influxdb-client v1.17.0 (InfluxDB 2.0).
+This code has been developed and tested with Python 3.8, using the DNA Center 
+SDK Dashboard v2.4.9 and influxdb-client v1.28.0 (InfluxDB 2.0).
 
 ### Steps
 
@@ -115,10 +115,20 @@ To make sure they're gone, check with:
    docker-compose ps
 ```
 
+## Caveats
+
+In the dashboard _SD-WAN - General Health Status_ the panel _Transport Health_ might be empty sometimes.
+The data in this panel is obtained every hour, so the refresh rate is 1 hour. If the dashboard time range is configured
+to less than 1 hour it will be empty. If you **want to see data** configure the dashboard **time range to 1 hour**.
+
+## Troubleshooting
+
+A common error is that the DNA Center has an invalid certificate, please check that SSL verfication is turned off
+to avoid any issues.
+
 ## License
 
 Check the [LICENSE][LICENSE] file attached to the project to see all the 
 details.
 
-[DOCS]: ./docs
 [LICENSE]: ./LICENSE.md
