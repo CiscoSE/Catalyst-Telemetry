@@ -44,8 +44,8 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "count {name=\"Control up\", status=\"up\"}"
+              "id": "byFrameRefID",
+              "options": "Control Up"
             },
             "properties": [
               {
@@ -59,8 +59,8 @@
           },
           {
             "matcher": {
-              "id": "byName",
-              "options": "count {name=\"Partial\", status=\"warning\"}"
+              "id": "byFrameRefID",
+              "options": "Partial"
             },
             "properties": [
               {
@@ -74,8 +74,8 @@
           },
           {
             "matcher": {
-              "id": "byName",
-              "options": "count {name=\"Control down\", status=\"error\"}"
+              "id": "byFrameRefID",
+              "options": "Control down"
             },
             "properties": [
               {
@@ -98,6 +98,8 @@
       "id": 16,
       "options": {
         "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -109,7 +111,7 @@
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.5.2",
       "targets": [
         {
           "groupBy": [
@@ -234,46 +236,21 @@
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "displayName": "${__field.labels.status}",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "mappings": []
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "count {name=\"vManage\", status=\"up\"}"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "green",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "displayName",
-                "value": "Up"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count {name=\"vManage\", status=\"error\"}"
+              "options": "error"
             },
             "properties": [
               {
@@ -282,10 +259,21 @@
                   "fixedColor": "red",
                   "mode": "fixed"
                 }
-              },
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "up"
+            },
+            "properties": [
               {
-                "id": "displayName",
-                "value": "Error"
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
               }
             ]
           }
@@ -318,7 +306,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.7",
       "targets": [
@@ -360,59 +352,35 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "vManage",
       "type": "piechart"
     },
     {
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "displayName": "${__field.labels.status}",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "mappings": []
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "count {name=\"vSmart\", status=\"up\"}"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "green",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "displayName",
-                "value": "Up"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count {name=\"vSmart\", status=\"error\"}"
+              "options": "error"
             },
             "properties": [
               {
@@ -421,10 +389,21 @@
                   "fixedColor": "red",
                   "mode": "fixed"
                 }
-              },
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "up"
+            },
+            "properties": [
               {
-                "id": "displayName",
-                "value": "Error"
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
               }
             ]
           }
@@ -457,7 +436,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.7",
       "targets": [
@@ -499,8 +482,6 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "vSmart",
       "type": "piechart"
     },
@@ -512,46 +493,21 @@
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "displayName": "${__field.labels.status}",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "mappings": []
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "count {name=\"vSmart\", status=\"up\"}"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "green",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "displayName",
-                "value": "Up"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "count {name=\"vSmart\", status=\"error\"}"
+              "options": "error"
             },
             "properties": [
               {
@@ -560,10 +516,21 @@
                   "fixedColor": "red",
                   "mode": "fixed"
                 }
-              },
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "up"
+            },
+            "properties": [
               {
-                "id": "displayName",
-                "value": "Error"
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
               }
             ]
           }
@@ -596,7 +563,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.7",
       "targets": [
@@ -638,8 +609,6 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "vSmart",
       "type": "piechart"
     },
@@ -651,27 +620,21 @@
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "displayName": "${__field.labels.status}",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "mappings": []
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "count {name=\"WAN Edge\", status=\"up\"}"
+              "options": "up"
             },
             "properties": [
               {
@@ -680,17 +643,13 @@
                   "fixedColor": "green",
                   "mode": "fixed"
                 }
-              },
-              {
-                "id": "displayName",
-                "value": "Up"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "count {name=\"WAN Edge\", status=\"error\"}"
+              "options": "error"
             },
             "properties": [
               {
@@ -699,10 +658,6 @@
                   "fixedColor": "red",
                   "mode": "fixed"
                 }
-              },
-              {
-                "id": "displayName",
-                "value": "Error"
               }
             ]
           }
@@ -735,7 +690,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.7",
       "targets": [
@@ -777,8 +736,6 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "WAN Edge",
       "type": "piechart"
     },
@@ -804,8 +761,8 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "count {name=\"Full WAN Connectivity\", status=\"up\"}"
+              "id": "byFrameRefID",
+              "options": "Full WAN Connectivity"
             },
             "properties": [
               {
@@ -819,14 +776,14 @@
           },
           {
             "matcher": {
-              "id": "byName",
-              "options": "count {name=\"No WAN Connectivity\", status=\"down\"}"
+              "id": "byFrameRefID",
+              "options": "Partial WAN Connectivity"
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "red",
+                  "fixedColor": "orange",
                   "mode": "fixed"
                 }
               }
@@ -834,14 +791,14 @@
           },
           {
             "matcher": {
-              "id": "byName",
-              "options": "count {name=\"Partial WAN Connectivity\", status=\"warning\"}"
+              "id": "byFrameRefID",
+              "options": "No WAN Connectivity"
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "orange",
+                  "fixedColor": "red",
                   "mode": "fixed"
                 }
               }
@@ -857,6 +814,7 @@
       },
       "id": 14,
       "options": {
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -868,7 +826,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.5.2",
       "targets": [
         {
           "groupBy": [
@@ -983,14 +941,15 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Site Health",
       "transformations": [],
       "type": "gauge"
     },
     {
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1092,7 +1051,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.5.2",
       "targets": [
         {
           "groupBy": [
@@ -1206,8 +1165,6 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "WAN Edge Health",
       "type": "gauge"
     },
@@ -1249,7 +1206,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.5.2",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -1306,9 +1263,7 @@
           "yaxis": "left"
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Transport Health",
       "tooltip": {
         "shared": true,
@@ -1317,9 +1272,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1334,16 +1287,12 @@
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1377,6 +1326,8 @@
       "id": 21,
       "options": {
         "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -1388,7 +1339,7 @@
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.5.2",
       "targets": [
         {
           "groupBy": [
@@ -1585,7 +1536,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.5.2",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -1633,9 +1584,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Top Applications",
       "tooltip": {
         "shared": true,
@@ -1644,9 +1593,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1655,27 +1602,21 @@
           "format": "decbytes",
           "label": "Usage",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 27,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1689,5 +1630,6 @@
   "timezone": "",
   "title": "SD-WAN - General Health Status",
   "uid": "FxapXZ6Mk",
-  "version": 1
+  "version": 3,
+  "weekStart": ""
 }
