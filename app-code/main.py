@@ -1,5 +1,5 @@
 """
-Copyright (c) 2021 Cisco and/or its affiliates.
+Copyright (c) 2022 Cisco and/or its affiliates.
 
 This software is licensed to you under the terms of the Cisco Sample
 Code License, Version 1.1 (the "License"). You may obtain a copy of the
@@ -57,7 +57,8 @@ client = InfluxDBClient(
 dnacenter_sandbox = dnacentersdk.DNACenterAPI(
     base_url=dnacenter_sandbox_url,
     username=dnacenter_sandbox_user,
-    password=dnacenter_sandbox_password)
+    password=dnacenter_sandbox_password,
+    verify=False)
 
 # Setup DNA Center Sandbox.
 dnacenter_live = dnacentersdk.DNACenterAPI(
