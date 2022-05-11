@@ -119,7 +119,9 @@ To make sure they're gone, check with:
 
 In the dashboard _SD-WAN - General Health Status_ the panel _Transport Health_ might be empty sometimes.
 The data in this panel is obtained in vManage every hour, so the refresh rate is 1 hour. If the dashboard time range is configured
-to less than 1 hour it will be empty. If you **want to see data** configure the dashboard **time range to at least 1 hour**.
+to less than 1 hour it will be empty. If you **want to see data** configure the dashboard **time range to at least 1 hour**. 
+If you want multiple data points 3 hours is a good setting, but it requires the collector to be running at least for that amount
+of time.
 
 ## Troubleshooting
 
