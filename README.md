@@ -8,6 +8,9 @@ The DNA Centers used are:
 - Sandbox: https://sandboxdnac.cisco.com
 - Live: https://live.cisco.com
 
+**Warning:** it seems that recently the live.cisco.com DNA Center was changed 
+and doesn't allow API access.
+
 The vManage used is:
 - SD-WAN demo: https://sdwandemo.cisco.com
 
@@ -50,13 +53,13 @@ SD-WAN General Health Status Dashboard:
 
 ### Requirements
 
-- Access to internet (to connect to the DNA Center & SD-WAN instances).
-- Docker installed (this app runs on Docker).
+- Access to internet (to connect to the DNA Center & SD-WAN instances)
+- Docker installed (this app runs on Docker)
 
 ### Versions
 
 This code has been developed and tested with Python 3.8, using the DNA Center 
-SDK Dashboard v2.4.9 and influxdb-client v1.28.0 (InfluxDB 2.0).
+SDK Dashboard v2.5.0 and influxdb-client v1.30.0 (InfluxDB 2.0).
 
 ### Steps
 
@@ -71,8 +74,11 @@ SDK Dashboard v2.4.9 and influxdb-client v1.28.0 (InfluxDB 2.0).
     cd DNA-Telemetry/
     docker-compose build
    ```
+   
+3. _[Optional]_ If you wish to add your own DNAC or SD-WAN instance, please edit the .env file.
 
-3. Start all the containers in the background (-d). Grafana and InfluxDB will 
+
+4. Start all the containers in the background (-d). Grafana and InfluxDB will 
    be automatically configured. 
    ```
     docker-compose up -d
@@ -87,14 +93,14 @@ SDK Dashboard v2.4.9 and influxdb-client v1.28.0 (InfluxDB 2.0).
    containers restarting a few times before they can do their job.
 
    
-4. Browse to http://localhost:3000/ to open Grafana and log in using:
+5. Browse to http://localhost:3000/ to open Grafana and log in using:
    - **Username**: admin
    - **Password**: admin
    
    It will ask for a password change, use the same passwords again.
    
 
-5. Inside Grafana, click on the _Search_ button on the left-side menu, you 
+6. Inside Grafana, click on the _Search_ button on the left-side menu, you 
    will see two dashboards if everything worked correctly:
    - DNAC - General Health Status 
    - DNAC - Hardware Health

@@ -11,8 +11,6 @@ services:
     command: python3 /usr/src/app/main.py
     volumes:
       - ./app-code:/usr/src/app
-    environment:
-      - TZ=Europe/Amsterdam
     env_file:
       - .env
     depends_on:
@@ -29,8 +27,6 @@ services:
     ports:
       - ${GRAFANA_PORT}:${GRAFANA_PORT}
     user: "0"
-    environment:
-      - TZ=Europe/Amsterdam
     env_file:
       - .env
     volumes:
@@ -49,8 +45,8 @@ services:
       - ${INFLUX_PORT}:${INFLUX_PORT}
     volumes:
       - ./influxdb/:/root/.influxdbv2
-    environment:
-      - TZ=Europe/Amsterdam
+    env_file:
+      - .env
     networks:
       - webnet
   influxdb_cli:
