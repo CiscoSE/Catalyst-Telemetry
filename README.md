@@ -65,13 +65,13 @@ SDK Dashboard v2.5.0 and influxdb-client v1.30.0 (InfluxDB 2.0).
 
 1. Clone the repository.
    ```
-   git clone https://wwwin-github.cisco.com/nfitelop/DNA-Telemetry
+   git clone https://wwwin-github.cisco.com/nfitelop/Catalyst-Telemetry
    ```
 
 2. Go to the directory where the `docker-compose.yml` file is located, pull and
  build all images of the container:
    ```
-    cd DNA-Telemetry/
+    cd Catalyst-Telemetry/
     docker-compose build
    ```
    

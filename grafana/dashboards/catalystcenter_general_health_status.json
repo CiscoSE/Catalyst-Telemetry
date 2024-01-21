@@ -90,7 +90,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"client_count\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"catalystcenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"client_count\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -179,7 +179,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"client_count\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"catalystcenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"client_count\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -304,7 +304,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"score_value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"catalystcenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_general\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"score_value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -443,7 +443,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRELESS\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"POOR\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"catalystcenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRELESS\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"POOR\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "Poor",
           "resultFormat": "time_series",
           "select": [
@@ -480,7 +480,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRELESS\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"FAIR\" )\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"catalystcenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRELESS\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"FAIR\" )\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "Fair",
           "resultFormat": "time_series",
           "select": [
@@ -517,7 +517,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRELESS\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"GOOD\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"catalystcenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRELESS\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"GOOD\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "Good",
           "resultFormat": "time_series",
           "select": [
@@ -647,7 +647,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRED\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"POOR\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"catalystcenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRED\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"POOR\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "Poor",
           "resultFormat": "time_series",
           "select": [
@@ -684,7 +684,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dnacenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRED\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"GOOD\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"catalystcenter\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"client_health_detailed\")\r\n  |> filter(fn: (r) => r[\"score_category\"] == \"WIRED\")\r\n  |> filter(fn: (r) => r[\"type\"] == \"GOOD\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "Good",
           "resultFormat": "time_series",
           "select": [
@@ -758,7 +758,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "DNAC - General Health Status",
+  "title": "Catalyst Center - General Health Status",
   "uid": "3Qy8Gs3Gz",
   "version": 4
 }
