@@ -25,7 +25,7 @@ from influxdb_client import InfluxDBClient
 load_dotenv()
 influxdb_host = os.getenv('INFLUX_HOST')
 influxdb_port = os.getenv('INFLUX_PORT')
-influxdb_dnabucket = os.getenv('INFLUX_DNACBUCKET')
+influxdb_catalystcenterbucket = os.getenv('INFLUX_CATALYSTCENTERBUCKET')
 influxdb_sdwanbucket = os.getenv('INFLUX_SDWANBUCKET')
 influxdb_token = os.getenv('INFLUX_TOKEN')
 influxdb_org = os.getenv('INFLUX_ORG')

@@ -1,14 +1,14 @@
-## Welcome to DNA Telemetry Dashboard
+## Welcome to Catalyst Telemetry Dashboard
 
 This small piece of code allows you to quickly create a few Grafana Dashboards 
-that are fed from different DNA elements such as DNA Center and vManage 
+that are fed from different DNA elements such as Catalyst Center and vManage 
 (SD-WAN).
 
-The DNA Centers used are:
+The Catalyst Centers used are:
 - Sandbox: https://sandboxdnac.cisco.com
 - Live: https://live.cisco.com
 
-**Warning:** it seems that recently the live.cisco.com DNA Center was changed 
+**Warning:** it seems that recently the live.cisco.com Catalyst Center was changed 
 and doesn't allow API access.
 
 The vManage used is:
@@ -25,7 +25,7 @@ You can find the basic instructions to run the code in the section
 
 The following image illustrates the architecture:
 
-![DNA Center Architecture](/images/DNA_DNAC_Telemetry.png)
+![Catalyst Center Architecture](/images/DNA_CatalystCenter_Telemetry.png)
 
 ![SD-WAN Architecture](/images/DNA_SD-WAN_Telemetry.png)
 
@@ -39,11 +39,11 @@ It uses:
 Containers in steady state:
 ![Containers in steady state](/images/containers_steady.png)
 
-DNA Center General Health Status Dashboard:
-![DNA Center General Health Status Dashboard](/images/dnac_general_health_status.png)
+Catalyst Center General Health Status Dashboard:
+![Catalyst Center General Health Status Dashboard](/images/dnac_general_health_status.png)
 
-DNA Center Hardware Health Dashboard
-![DNA Center Hardware Health Dashboard](/images/dnac_hardware_health.png)
+Catalyst Center Hardware Health Dashboard
+![Catalyst Center Hardware Health Dashboard](/images/dnac_hardware_health.png)
 
 SD-WAN General Health Status Dashboard:
 ![SD-WAN General Health Status Dashboard](/images/sdwan_general_health_status.png)
@@ -53,12 +53,12 @@ SD-WAN General Health Status Dashboard:
 
 ### Requirements
 
-- Access to internet (to connect to the DNA Center & SD-WAN instances)
+- Access to internet (to connect to the Catalyst Center & SD-WAN instances)
 - Docker installed (this app runs on Docker)
 
 ### Versions
 
-This code has been developed and tested with Python 3.8, using the DNA Center 
+This code has been developed and tested with Python 3.8, using the Catalyst Center 
 SDK Dashboard v2.5.0 and influxdb-client v1.30.0 (InfluxDB 2.0).
 
 ### Steps
@@ -75,7 +75,7 @@ SDK Dashboard v2.5.0 and influxdb-client v1.30.0 (InfluxDB 2.0).
     docker-compose build
    ```
    
-3. _[Optional]_ If you wish to add your own DNAC or SD-WAN instance, please edit the .env file.
+3. _[Optional]_ If you wish to add your own Catalyst Center or SD-WAN instance, please edit the .env file.
 
 
 4. Start all the containers in the background (-d). Grafana and InfluxDB will 
@@ -102,8 +102,8 @@ SDK Dashboard v2.5.0 and influxdb-client v1.30.0 (InfluxDB 2.0).
 
 6. Inside Grafana, click on the _Search_ button on the left-side menu, you 
    will see two dashboards if everything worked correctly:
-   - DNAC - General Health Status 
-   - DNAC - Hardware Health
+   - Catalyst Center - General Health Status 
+   - Catalyst - Hardware Health
    - SD-WAN - General Health Status
    
    You should be able to access them and see the information from the 
@@ -131,7 +131,7 @@ of time.
 
 ## Troubleshooting
 
-A common error is that the DNA Center has an invalid certificate, please check that SSL verfication is turned off
+A common error is that the Catalyst Center has an invalid certificate, please check that SSL verfication is turned off
 to avoid any issues.
 
 ## License

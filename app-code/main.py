@@ -31,17 +31,17 @@ from setup import influxdb_setup
 load_dotenv()
 influxdb_host = os.getenv('INFLUX_HOST')
 influxdb_port = os.getenv('INFLUX_PORT')
-influxdb_dnabucket = os.getenv('INFLUX_DNACBUCKET')
+influxdb_catalystcenterbucket = os.getenv('INFLUX_CATALYSTCENTERBUCKET')
 influxdb_sdwanbucket = os.getenv('INFLUX_SDWANBUCKET')
 influxdb_token = os.getenv('INFLUX_TOKEN')
 influxdb_org = os.getenv('INFLUX_ORG')
 collector_interval = int(os.getenv('COLLECTOR_INTERVAL'))
-dnacenter_sandbox_url = os.getenv('DNACENTER_SANDBOX_URL')
-dnacenter_sandbox_user = os.getenv('DNACENTER_SANDBOX_USER')
-dnacenter_sandbox_password = os.getenv('DNACENTER_SANDBOX_PASSWORD')
-dnacenter_live_url = os.getenv('DNACENTER_LIVE_URL')
-dnacenter_live_user = os.getenv('DNACENTER_LIVE_USER')
-dnacenter_live_password = os.getenv('DNACENTER_LIVE_PASSWORD')
+catalystcenter_sandbox_url = os.getenv('CATALYSTCENTER_SANDBOX_URL')
+catalystcenter_sandbox_user = os.getenv('CATALYSTCENTER_SANDBOX_USER')
+catalystcenter_sandbox_password = os.getenv('CATALYSTCENTER_SANDBOX_PASSWORD')
+catalystcenter_live_url = os.getenv('CATALYSTCENTER_LIVE_URL')
+catalystcenter_live_user = os.getenv('CATALYSTCENTER_LIVE_USER')
+catalystcenter_live_password = os.getenv('CATALYSTCENTER_LIVE_PASSWORD')
 sdwan_sandbox_host = os.getenv('SDWAN_SANDBOX_HOST')
 sdwan_sandbox_port = os.getenv('SDWAN_SANDBOX_PORT')
 sdwan_sandbox_user = os.getenv('SDWAN_SANDBOX_USER')
@@ -54,17 +54,17 @@ client = InfluxDBClient(
     token=influxdb_token)
 
 # Setup DNA Center Sandbox.
-dnacenter_sandbox = dnacentersdk.DNACenterAPI(
-    base_url=dnacenter_sandbox_url,
-    username=dnacenter_sandbox_user,
-    password=dnacenter_sandbox_password,
+catalystcenter_sandbox = dnacentersdk.DNACenterAPI(
+    base_url=catalystcenter_sandbox_url,
+    username=catalystcenter_sandbox_user,
+    password=catalystcenter_sandbox_password,
     verify=False)
 
 # Setup DNA Center Sandbox.
-dnacenter_live = dnacentersdk.DNACenterAPI(
-    base_url=dnacenter_live_url,
-    username=dnacenter_live_user,
-    password=dnacenter_live_password,
+catalystcenter_live = dnacentersdk.DNACenterAPI(
+    base_url=catalystcenter_live_url,
+    username=catalystcenter_live_user,
+    password=catalystcenter_live_password,
     verify=False)
 
 # Setup SD-WAN Sandbox.
@@ -79,7 +79,7 @@ while True:
 
     """ DNA Center section """
     # Client health.
-    response = dnacenter_live.clients.get_overall_client_health().response
+    response = catalystcenter_live.clients.get_overall_client_health().response
     for score in response[0]['scoreDetail']:
         score_category = score['scoreCategory']['value']
         score_client_count = score['clientCount']
@@ -88,10 +88,10 @@ while True:
         # Save to influxdb
         data = "client_health_general,score_category=" + score_category + \
                " score_value=" + str(score_value)
-        write_api.write(influxdb_dnabucket, influxdb_org, data)
+        write_api.write(influxdb_catalystcenterbucket, influxdb_org, data)
         data = "client_health_general,score_category=" + score_category + \
                " client_count=" + str(score_client_count)
-        write_api.write(influxdb_dnabucket, influxdb_org, data)
+        write_api.write(influxdb_catalystcenterbucket, influxdb_org, data)
         try:
             for category in score['scoreList']:
                 category_type = category['scoreCategory']['value']
@@ -100,14 +100,14 @@ while True:
                 data = "client_health_detailed,score_category=" + \
                        score_category + ",type=" + category_type + \
                        " client_count=" + str(client_count)
-                write_api.write(influxdb_dnabucket, influxdb_org, data)
+                write_api.write(influxdb_catalystcenterbucket, influxdb_org, data)
         except:
             pass
 
-    devices = dnacenter_sandbox.devices. \
+    devices = catalystcenter_sandbox.devices. \
         get_device_list(family="Switches and Hubs").response
     for device in devices:
-        device_details = dnacenter_sandbox. \
+        device_details = catalystcenter_sandbox. \
             devices.get_device_detail(identifier="uuid",
                                       search_by=device.id).response
         cpu = device_details.cpu
@@ -116,10 +116,10 @@ while True:
 
         data = "cpu,host=" + device.id + ",device_name=" + device.hostname + \
                " cpu_used=" + str(cpu)
-        write_api.write(influxdb_dnabucket, influxdb_org, data)
+        write_api.write(influxdb_catalystcenterbucket, influxdb_org, data)
         data = "overall_health,host=" + device.id + ",device_name=" + \
                device.hostname + " overall_health=" + str(overall_health)
-        write_api.write(influxdb_dnabucket, influxdb_org, data)
+        write_api.write(influxdb_catalystcenterbucket, influxdb_org, data)
 
     """ SD-WAN Section """
     # Get the control connections statistics (vBond, vSmart, vEdge).
