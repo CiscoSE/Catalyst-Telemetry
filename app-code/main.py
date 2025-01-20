@@ -53,14 +53,14 @@ client = InfluxDBClient(
     url="http://" + influxdb_host + ":" + str(influxdb_port),
     token=influxdb_token)
 
-# Setup DNA Center Sandbox.
+# Setup Catalyst Center Sandbox.
 catalystcenter_sandbox = dnacentersdk.DNACenterAPI(
     base_url=catalystcenter_sandbox_url,
     username=catalystcenter_sandbox_user,
     password=catalystcenter_sandbox_password,
     verify=False)
 
-# Setup DNA Center Sandbox.
+# Setup Catalyst Center Sandbox.
 catalystcenter_live = dnacentersdk.DNACenterAPI(
     base_url=catalystcenter_live_url,
     username=catalystcenter_live_user,
@@ -77,7 +77,7 @@ while True:
     # InfluxDB write API.
     write_api = client.write_api(write_options=SYNCHRONOUS)
 
-    """ DNA Center section """
+    """ Catalyst Center section """
     # Client health.
     response = catalystcenter_live.clients.get_overall_client_health().response
     for score in response[0]['scoreDetail']:
