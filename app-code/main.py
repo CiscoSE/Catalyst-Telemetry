@@ -60,7 +60,7 @@ catalystcenter_sandbox = dnacentersdk.DNACenterAPI(
     password=catalystcenter_sandbox_password,
     verify=False)
 
-# Setup Catalyst Center Sandbox.
+# Setup Catalyst Center Live.
 catalystcenter_live = dnacentersdk.DNACenterAPI(
     base_url=catalystcenter_live_url,
     username=catalystcenter_live_user,
